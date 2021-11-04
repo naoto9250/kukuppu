@@ -1,0 +1,493 @@
+/****************************
+ヘッダー
+****************************/
+.header-play {
+    height: 25vw;
+    max-height: 188px;
+}
+.header-play .inner {
+    width: 88vw;
+    max-width: 660px;
+    margin: 0 auto;
+    padding-top: 23px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+}
+.header-play .inner .header-back img {
+    width: 26vw;
+    max-width: 195px;
+    height: auto;
+}
+.header-play .inner h1 img {
+    width: 26vw;
+    max-width: 275px;
+    height: auto;
+}
+
+@media screen and (max-width: 750px) {
+    .header-play .inner {
+        padding-top: 12px;
+    }
+    .header-play .inner h1 img {
+        width: 30vw;
+    }
+}
+
+/****************************
+再生設定エリア
+****************************/
+.container {
+    height: 800px;
+}
+.container section {
+    text-align: left;
+}
+.player {
+    position: relative;
+}
+.player section {
+    position: absolute;
+    width: 100%;
+    margin: 0;
+    top: 65%;
+}
+.player_ttl img {
+    width: 100%;
+    height: auto;
+}
+/* はじめるボタン・つぎへボタン */
+.btn_play,
+.to_next {
+    width: 34vw;
+    max-width: 260px;
+    height: auto;
+    margin: 0 auto;
+}
+.btn_play img,
+.to_next img {
+    width: 100%;
+    height: auto;
+}
+.btn_play:hover{
+    background: url(../img/btn-play_active.png) center no-repeat;
+    background-size: contain;
+}
+.btn_play:active {
+    background: url(../img/btn-play_active.png) center no-repeat;
+    background-size: contain;
+}
+.to_next:hover {
+    background: url(../img/btn-next-play_active.png) center no-repeat;
+    background-size: contain;
+}
+.to_next:active {
+    background: url(../img/btn-next-play_active.png) center no-repeat;
+    background-size: contain;
+}
+.btn_play:hover img,
+.to_next:hover img {
+    visibility: hidden;
+}
+.btn_play:active img,
+.to_next:active img {
+    visibility: hidden;
+}
+/* ふりがな */
+.jikan,
+.onaji,
+.kuku,
+.kai,
+.kotae,
+.mai {
+    position: relative;
+}
+.jikan::before,
+.onaji::before,
+.kuku::before,
+.kai::before,
+.kotae::before,
+.mai::before {
+    position: absolute;
+    font-size: 0.75rem;
+    top: -13px;
+    width: 100%;
+    text-align: center;
+    line-height: 1;
+}
+.jikan::before {
+    content: "じ かん";
+}
+.onaji::before {
+    content: "おな";
+}
+.kuku::before {
+    content: "く く";
+}
+.kai::before {
+    content: "かいすう";
+}
+.kotae::before {
+    content: "こた";
+}
+.mai::before {
+    content: "まい すう";
+}
+.config_sec .wrapper {
+    display: inline-block;
+}
+/* 次を読むまでの時間・同じ九九を読む回数・答えを読むまでの時間 */
+.btn_column3,
+.btn_column4 {
+    margin: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+    border: solid 3px #000;
+    border-radius: 17px;
+    padding: 4px;
+}
+.btn_column3 li,
+.btn_column4 li {
+    width: 17vw;
+    max-width: 130px;
+    height: auto;
+    margin-right: 4px;
+}
+.btn_column3 li:last-child,
+.btn_column4 li:last-child {
+    margin-right: 0;
+}
+.btn_column3 img,
+.btn_column4 img {
+    width: 100%;
+    height: auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+}
+.btn_column3 li.select img,
+.btn_column4 li.select img {
+    visibility: hidden;
+}
+/* つぎをよむまでの時間 選択時 */
+.btn_column4 .select#sec1 {
+    background: url(../img/btn-1s_active.png) no-repeat top center;
+    background-size: contain;
+}
+.btn_column4 .select#sec5 {
+    background: url(../img/btn-5s_active.png) no-repeat top center;
+    background-size: contain;
+}
+.btn_column4 .select#sec10 {
+    background: url(../img/btn-10s_active.png) no-repeat top center;
+    background-size: contain;
+}
+.btn_column4 .select#secM {
+    background: url(../img/btn-m_active.png) no-repeat top center;
+    background-size: contain;
+}
+/* 同じ九九を読む回数 選択時 */
+.btn_column3 .select#repeat1 {
+    background: url(../img/btn-1kai_active.png) no-repeat top center;
+    background-size: contain;
+}
+.btn_column3 .select#repeat2 {
+    background: url(../img/btn-2kai_active.png) no-repeat top center;
+    background-size: contain;
+}
+.btn_column3 .select#repeat3 {
+    background: url(../img/btn-3kai_active.png) no-repeat top center;
+    background-size: contain;
+}
+/* 答えをよむまでの時間 選択時 */
+.btn_column4 .select#a_c {
+    background: url(../img/btn-a-time-c_active.png) no-repeat top center;
+    background-size: contain;
+}
+.btn_column4 .select#a_3 {
+    background: url(../img/btn-a-time-3s_active.png) no-repeat top center;
+    background-size: contain;
+}
+.btn_column4 .select#a_6 {
+    background: url(../img/btn-a-time-6s_active.png) no-repeat top center;
+    background-size: contain;
+}
+.btn_column4 .select#a_m {
+    background: url(../img/btn-a-time-m_active.png) no-repeat top center;
+    background-size: contain;
+}
+@media screen and (max-width: 750px) {
+    .btn_column4 {
+        border-radius: 13px;
+        padding: 3px 4px;
+    }
+    .btn_column4 li {
+        margin-right: 2px;
+    }
+}
+@media screen and (max-width: 480px) {
+    .container {
+        height: 600px;
+    }
+}
+
+/****************************
+再生画面
+****************************/
+.read_sec {
+    margin: 20px 0;
+}
+/* 読み上げボタン */
+.btn_read {
+    margin-bottom: 30px;
+}
+.btn_read a {
+    font-size: 1.2em;
+    color: #000;
+    text-decoration: none;
+}
+/* カウンター */
+.count {
+    position: absolute;
+    left: 75%;
+    top: 8%;
+    width: 25vw;
+    height: 20vw;
+    max-width: 188px;
+    max-height: 150px;
+    background: url(../img/count.png) no-repeat center;
+    background-size: contain;
+}
+.count #count_child {
+    position: absolute;
+    top: 18%;
+    left: 25%;
+    font-size: 2.3em;
+    font-weight: bold;
+}
+.count #count_parent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 2.3em;
+    font-weight: bold;
+}
+/* もう1回きく・答えをきく */
+.repeat {
+    margin-top: 42px;
+}
+.read_answer {
+    margin-top: 20px;
+}
+.repeat img,
+.read_answer img {
+    width: 100%;
+    height: auto;
+}
+.repeat:hover{
+    background: url(../img/btn-repeat_hov.png) no-repeat center;
+    background-size: contain;
+}
+.repeat:active {
+    background: url(../img/btn-repeat_hov.png) no-repeat center;
+    background-size: contain;
+}
+.read_answer:hover {
+    background: url(../img/btn-answer_hov.png) no-repeat center;
+    background-size: contain;
+}
+.read_answer:active {
+    background: url(../img/btn-answer_hov.png) no-repeat center;
+    background-size: contain;
+}
+.repeat:hover img,
+.read_answer:hover img {
+    visibility: hidden;
+}
+.repeat:active img,
+.read_answer:active img {
+    visibility: hidden;
+}
+.repeat:active img,
+.read_answer:active img {
+    visibility: hidden;
+}
+
+/* 1つ前に戻る・とめる */
+.operation #back:hover {
+    background: url(../img/btn-back_hov.png) no-repeat center;
+    background-size: contain;
+}
+.operation #back:active {
+    background: url(../img/btn-back_hov.png) no-repeat center;
+    background-size: contain;
+}
+.operation #play_pause:hover .img_play {
+    background: url(../img/btn-play02_hov.png) no-repeat center;
+    background-size: contain;
+}
+.operation #play_pause:active .img_play {
+    background: url(../img/btn-play02_hov.png) no-repeat center;
+    background-size: contain;
+}
+.operation #play_pause:hover .btn_pause {
+    background: url(../img/btn-pause_hov.png) no-repeat center;
+    background-size: contain;
+}
+.operation #play_pause:active .btn_pause {
+    background: url(../img/btn-pause_hov.png) no-repeat center;
+    background-size: contain;
+}
+.operation #back:hover img,
+.operation #play_pause:hover img {
+    visibility: hidden;
+}
+.operation #back:active img,
+.operation #play_pause:active img {
+    visibility: hidden;
+}
+.disabled {
+    pointer-events: none !important;
+}
+.disabled:hover img {
+    visibility: visible !important;
+}
+.disabled:active img {
+    visibility: visible !important;
+}
+
+@media screen and (max-width: 750px) {
+    .count #count_child,
+    .count #count_parent {
+        font-size: 2em;
+    }
+}
+@media screen and (max-width: 480px) {
+    .count {
+        left: 70%;
+        top: 11%;
+        width: 94px;
+        height: 75px;
+    }
+    .count #count_child,
+    .count #count_parent {
+        font-size: 1.1em;
+    }
+    .count #count_child {
+        top: 19%;
+        left: 27%;
+    }
+}
+
+/****************************
+ポップアップウィンドウ
+****************************/
+.popup {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: .6s;
+    -o-transition: .6s;
+    transition: .6s;
+}
+.popup.is-show {
+    opacity: 1;
+    visibility: visible;
+}
+.popup-inner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+    width: 86vw;
+    height: 49vw;
+    max-width: 650px;
+    max-height: 370px;
+    text-align: center;
+    z-index: 2;
+}
+.bg-back p {
+    margin-top: 80px;
+}
+.popup-inner p {
+    font-size: 2em;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #FFF, -1px -1px 0 #FFF, -1px 1px 0 #FFF, 1px -1px 0 #FFF, 0px 1px 0 #FFF, 0-1px 0 #FFF, -1px 0 0 #FFF, 1px 0 0 #FFF;
+}
+.popup-inner img {
+    width: 73vw;
+    max-width: 550px;
+    height: auto;
+}
+.close-btn {
+    position: absolute;
+    right: 17px;
+    top: 11px;
+    width: 6vw;
+    max-width: 50px;
+    height: auto;
+    cursor: pointer;
+}
+.close-btn img {
+    width: 100%;
+    height: auto;
+}
+.black-background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255,.6);
+    z-index: 1;
+    cursor: pointer;
+}
+/* 再生終了時の背景 */
+.bg-end {
+    background: url(../img/popup-end.png) no-repeat center;
+    background-size: contain;
+}
+.bg-back {
+    background: url(../img/popup-back.png) no-repeat center;
+    background-size: contain;
+}
+@media screen and (max-width: 750px) {
+    .popup-inner p {
+        font-size: 1.5em;
+    }
+}
+@media screen and (max-width: 480px) {
+    .popup-inner p {
+        font-size: 1.1em;
+    }
+    .bg-back p {
+        margin-top: 50px;
+    }
+}

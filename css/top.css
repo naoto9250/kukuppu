@@ -1,0 +1,151 @@
+/****************************
+フォント
+****************************/
+h2::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    margin-top: 5px;
+    background-image: url(../img/dashed.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/****************************
+ヘッダー
+****************************/
+.logo-top {
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: 40px;
+    z-index: 1000;
+}
+.logo-top img {
+    width: 72vw;
+    max-width: 537px;
+    height: auto;
+}
+
+@media screen and (max-width: 750px) {
+    .logo-top {
+        top: 22px;
+    }
+}
+
+/****************************
+よみかたをえらぼうボタン
+****************************/
+.btn_sort img {
+    width: 100%;
+}
+.btn_sort:hover {
+    display: block;
+}
+/* ランダム・ホバー */
+#read_random.btn_sort:hover {
+    background: url(../img/btn-random_hov.png) center no-repeat;
+    background-size: contain;
+}
+/* ランダム・選択時 */
+#read_random.btn_active01 {
+    background: url(../img/btn-random_select.png) center no-repeat;
+    background-size: contain;
+}
+#read_random.btn_active01:hover {
+    background: url(../img/btn-random_select.png) center no-repeat;
+    background-size: contain;
+}
+#read_random.btn_active01 img {
+    visibility: hidden;
+}
+/* 順番・ホバー */
+#read_all.btn_sort:hover {
+    background: url(../img/btn-asc_hov.png) center no-repeat;
+    background-size: contain;
+}
+/* 順番・選択時 */
+#read_all.btn_active01 {
+    background: url(../img/btn-asc_select.png) center no-repeat;
+    background-size: contain;
+}
+#read_all.btn_active01:hover {
+    background: url(../img/btn-asc_select.png) center no-repeat;
+    background-size: contain;
+}
+#read_all.btn_active01 img {
+    visibility: hidden;
+}
+
+/****************************
+よむだんをえらぼうボタン
+****************************/
+/* ぜんぶ・ホバー */
+#step_all.btn_step:hover {
+    background: url(../img/step-all_hov.png) center no-repeat;
+    background-size: contain;
+}
+/* ぜんぶ・選択時 */
+#step_all.btn_active02 {
+    background: url(../img/step-all_select.png) center no-repeat;
+    background-size: contain;
+}
+#step_all.btn_active02:hover {
+    background: url(../img/step-all_select.png) center no-repeat;
+    background-size: contain;
+}
+#step_all.btn_active02 img {
+    visibility: hidden;
+}
+/* 1-3・ホバー */
+#step_1-3.btn_step:hover {
+    background: url(../img/step-13_hov.png) center no-repeat;
+    background-size: contain;
+}
+/* 1-3・選択時 */
+#step_1-3.btn_active02 {
+    background: url(../img/step-13_select.png) center no-repeat;
+    background-size: contain;
+}
+#step_1-3.btn_active02:hover {
+    background: url(../img/step-13_select.png) center no-repeat;
+    background-size: contain;
+}
+#step_1-3.btn_active02 img {
+    visibility: hidden;
+}
+/* 4-6・ホバー */
+#step_4-6.btn_step:hover {
+    background: url(../img/step-46_hov.png) center no-repeat;
+    background-size: contain;
+}
+/* 4-6・選択時 */
+#step_4-6.btn_active02 {
+    background: url(../img/step-46_select.png) center no-repeat;
+    background-size: contain;
+}
+#step_4-6.btn_active02:hover {
+    background: url(../img/step-46_select.png) center no-repeat;
+    background-size: contain;
+}
+#step_4-6.btn_active02 img {
+    visibility: hidden;
+}
+/* 7-9・ホバー */
+#step_7-9.btn_step:hover {
+    background: url(../img/step-79_hov.png) center no-repeat;
+    background-size: contain;
+}
+/* 7-9・選択時 */
+#step_7-9.btn_active02 {
+    background: url(../img/step-79_select.png) center no-repeat;
+    background-size: contain;
+}
+#step_7-9.btn_active02:hover {
+    background: url(../img/step-79_select.png) center no-repeat;
+    background-size: contain;
+}
+#step_7-9.btn_active02 img {
+    visibility: hidden;
+}
