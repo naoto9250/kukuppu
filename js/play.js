@@ -589,16 +589,13 @@ function audioPlay(path) {
         play_pause.classList.remove('disabled');
     }
 
-    // 音声ファイルを再生する
-    console.log(counter + '枚目 / ' + '音声ファイル：' + path);
-    
+    // 音声ファイルを再生する    
     audio.src = path;
     audio.load();
     var playPromise = audio.play();
     if (playPromise !== undefined) {
         playPromise.then(_ => {
             // ロードリクエストが完了したので「次へ」ボタンを活性にする、最後の読み上げの場合は非活性のまま
-            console.log('九九のロードが完了');
             if(getParam('step') == 'all' && counter >= 81) {
                 if(btn_next.classList.contains('disabled')) {
                     btn_next.classList.add('disabled');
@@ -689,7 +686,6 @@ function init() {
             // 音声リストを取得
             while(audioListQA === undefined || audioListQA === null) {
                 audioListQA = getRandomFileAll();
-                console.log(audioListQA);
             }
             // 音声を再生
             audioPlay(audioListQA[counter - 1]);
@@ -701,8 +697,6 @@ function init() {
                 var {audioQ, audioA} = getRandomFileQA();
                 playListQ = audioQ;
                 playListA = audioA;
-                console.log(playListQ);
-                console.log(playListA);
             }
             // 問題の音声ファイルを再生
             audioPlay(playListQ[counter - 1]);
@@ -714,7 +708,6 @@ function init() {
             //  音声リストを取得
             while(audioListQA === undefined || audioListQA === null) {
                 audioListQA = getAscFileAll();
-                console.log(audioListQA);
             }
             // 音声を再生
             audioPlay(audioListQA[counter - 1]);
@@ -726,8 +719,6 @@ function init() {
                 var {audioQ, audioA} = getAscFileQA();
                 playListQ = audioQ;
                 playListA = audioA;
-                console.log(playListQ);
-                console.log(playListA);
             }
             // 問題の音声ファイルを再生
             audioPlay(playListQ[counter - 1]);
@@ -853,7 +844,6 @@ play_pause.addEventListener("click", ()=>{
 
 // 答えを読むボタン
 btn_a.addEventListener("click", ()=>{
-    console.log('答えを読むボタンクリックを検出');
     if(playListA) {
         // 答え再生済みフラグを立てる
         answerPlayed = true;
