@@ -5,8 +5,8 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>頭のよくなる九九トランプ ククップ</title>
-	<link rel="stylesheet" href="./css/common.css">
-	<link rel="stylesheet" href="./css/play.css">
+	<link rel="stylesheet" href="./css/common.css?v=20211116">
+	<link rel="stylesheet" href="./css/play.css?v=20211116">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 	<script src="js/jquery-3.6.0.min.js"></script>
 </head>
@@ -18,80 +18,82 @@
 		</div>
 	</header>
 
-	<div class="container">
-		<div class="player">
-			<h2 id="player_ttl" class="player_ttl text_center"><img src="./img/txt-play_all.png" alt="ぜんぶのだんをよむ"></h2>
-
-			<section id="config_sec" class="config_sec">
-				<div class="btn_play" id="btn_play"><img src="./img/btn-play.png" alt="はじめる"></div>
-				<h3>つぎをよむまでの<span class="jikan">時間</span></h3>
-				<div class="wrapper">
-					<ul class="btn_column4" id="next_time">
-						<li id="sec1" data-next="1000"><img src="./img/btn-1s.png" alt="１秒"></li>
-						<li id="sec5" data-next="5000" class="select"><img src="./img/btn-5s.png" alt="５秒"></li>
-						<li id="sec10" data-next="10000"><img src="./img/btn-10s.png" alt="１０秒"></li>
-						<li id="secM" data-next="manual"><img src="./img/btn-m.png" alt="手動"></li>
+	<div class="wrap">
+		<div class="container">
+			<div class="player">
+				<h2 id="player_ttl" class="player_ttl text_center"><img src="./img/txt-play_all.png" alt="ぜんぶのだんをよむ"></h2>
+	
+				<section id="config_sec" class="config_sec">
+					<div class="btn_play" id="btn_play"><img src="./img/btn-play.png" alt="はじめる"></div>
+					<h3>つぎをよむまでの<span class="jikan">時間</span></h3>
+					<div class="wrapper">
+						<ul class="btn_column4" id="next_time">
+							<li id="sec1" data-next="1000"><img src="./img/btn-1s.png" alt="１秒"></li>
+							<li id="sec5" data-next="5000" class="select"><img src="./img/btn-5s.png" alt="５秒"></li>
+							<li id="sec10" data-next="10000"><img src="./img/btn-10s.png" alt="１０秒"></li>
+							<li id="secM" data-next="manual"><img src="./img/btn-m.png" alt="手動"></li>
+						</ul>
+					</div>
+					
+					<h3><span class="onaji">同</span>じ<span class="kuku">九九</span>をよむ<span class="kai">回数</span></h3>
+					<div class="wrapper">
+						<ul class="btn_column3" id="repeat">
+							<li id="repeat1" data-read="1" class="select"><img src="./img/btn-1kai.png" alt="１回"></li>
+							<li id="repeat2" data-read="2"><img src="./img/btn-2kai.png" alt="２回"></li>
+							<li id="repeat3" data-read="3"><img src="./img/btn-3kai.png" alt="３回"></li>
+						</ul>
+					</div>
+					<h3><span class="kotae">答</span>えをよむまでの<span class="jikan">時間</span></h3>
+					<div class="wrapper">
+						<ul class="btn_column4" id="answer_time">
+							<li id="a_c" data-answer="continue" class="select"><img src="./img/btn-a-time-c.png" alt="つづけて"></li>
+							<li id="a_3" data-answer="3000"><img src="./img/btn-a-time-3s.png" alt="３秒"></li>
+							<li id="a_6" data-answer="6000"><img src="./img/btn-a-time-6s.png" alt="６秒"></li>
+							<li id="a_m" data-answer="answer-manual"><img src="./img/btn-a-time-m.png" alt="手動"></li>
+						</ul>
+					</div>
+				</section>
+	
+				<section class="read_sec dsp_none" id="read_sec">
+					<div class="to_next" id="to_next"><img src="./img/btn-next-play.png" alt="つぎへ"></div>
+					<input type="hidden" id="to_next_hidden">
+					<div class="count" id="count">
+						<span id="count_child">01</span>
+						<span id="count_parent">81</span>
+					</div>
+					<div id="btn_repeat" class="repeat"><img src="./img/btn-repeat.png" alt="もう１回きく"></div>
+					<div id="read_answer" class="read_answer hidden"><img src="./img/btn-answer.png" alt="答えをきく"></div>
+					<ul class="operation btn_column2">
+						<li id="back"><img src="./img/btn-back.png" alt="1つ前に戻る"></li>
+						<li id="play_pause"></li>
 					</ul>
+	
+					<!-- オーディオファイル -->
+					<div class="audio" id="audio_js">
+						<audio id="bgm" preload>
+							<source id="bgmsrc" src="audio/all/k11.mp3" type="audio/mp3">
+						</audio>
+					</div>
+				</section>
+	
+				<div class="popup" id="js-popup">
+					<div class="popup-inner bg-end">
+						<p>おしまい！<br>とれたカードの<br><span class="mai">枚数</span>を かぞえよう！</p>
+						<a href="https://manabi-games.gakken.jp/kukuppu/onsei"><img src="./img/btn-end.png" alt="はい"></a>
+					</div>
+					<div class="black-background"></div>
+				</div>
+	
+				<div class="popup" id="js-popup02">
+					<div class="popup-inner bg-back">
+						<div class="close-btn" id="js-close-btn"><img src="./img/btn-x.png"></div>
+						<p>よみあげを やめますか？</p>
+						<a href="https://manabi-games.gakken.jp/kukuppu/onsei"><img src="./img/btn-play-end.png" alt="はい"></a>
+					</div>
+					<div class="black-background" id="js-black-bg"></div>
 				</div>
 				
-				<h3><span class="onaji">同</span>じ<span class="kuku">九九</span>をよむ<span class="kai">回数</span></h3>
-				<div class="wrapper">
-					<ul class="btn_column3" id="repeat">
-						<li id="repeat1" data-read="1" class="select"><img src="./img/btn-1kai.png" alt="１回"></li>
-						<li id="repeat2" data-read="2"><img src="./img/btn-2kai.png" alt="２回"></li>
-						<li id="repeat3" data-read="3"><img src="./img/btn-3kai.png" alt="３回"></li>
-					</ul>
-				</div>
-				<h3><span class="kotae">答</span>えをよむまでの<span class="jikan">時間</span></h3>
-				<div class="wrapper">
-					<ul class="btn_column4" id="answer_time">
-						<li id="a_c" data-answer="continue" class="select"><img src="./img/btn-a-time-c.png" alt="つづけて"></li>
-						<li id="a_3" data-answer="3000"><img src="./img/btn-a-time-3s.png" alt="３秒"></li>
-						<li id="a_6" data-answer="6000"><img src="./img/btn-a-time-6s.png" alt="６秒"></li>
-						<li id="a_m" data-answer="answer-manual"><img src="./img/btn-a-time-m.png" alt="手動"></li>
-					</ul>
-				</div>
-			</section>
-
-			<section class="read_sec dsp_none" id="read_sec">
-				<div class="to_next" id="to_next"><img src="./img/btn-next-play.png" alt="つぎへ"></div>
-				<input type="hidden" id="to_next_hidden">
-				<div class="count" id="count">
-					<span id="count_child">01</span>
-					<span id="count_parent">81</span>
-				</div>
-				<div id="btn_repeat" class="repeat"><img src="./img/btn-repeat.png" alt="もう１回きく"></div>
-				<div id="read_answer" class="read_answer hidden"><img src="./img/btn-answer.png" alt="答えをきく"></div>
-				<ul class="operation btn_column2">
-					<li id="back"><img src="./img/btn-back.png" alt="1つ前に戻る"></li>
-					<li id="play_pause"></li>
-				</ul>
-
-				<!-- オーディオファイル -->
-				<div class="audio" id="audio_js">
-					<audio id="bgm" preload>
-						<source id="bgmsrc" src="audio/all/k11.mp3" type="audio/mp3">
-					</audio>
-				</div>
-			</section>
-
-			<div class="popup" id="js-popup">
-				<div class="popup-inner bg-end">
-					<p>おしまい！<br>とれたカードの<br><span class="mai">枚数</span>を かぞえよう！</p>
-					<a href="https://manabi-games.gakken.jp/kukuppu/onsei"><img src="./img/btn-end.png" alt="はい"></a>
-				</div>
-				<div class="black-background"></div>
 			</div>
-
-			<div class="popup" id="js-popup02">
-				<div class="popup-inner bg-back">
-					<div class="close-btn" id="js-close-btn"><img src="./img/btn-x.png"></div>
-					<p>よみあげを やめますか？</p>
-					<a href="https://manabi-games.gakken.jp/kukuppu/onsei"><img src="./img/btn-play-end.png" alt="はい"></a>
-				</div>
-				<div class="black-background" id="js-black-bg"></div>
-			</div>
-			
 		</div>
 	</div>
 
