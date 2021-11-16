@@ -44,7 +44,7 @@
 再生設定エリア
 ****************************/
 .container {
-    height: 800px;
+    height: 740px;
 }
 .container section {
     text-align: left;
@@ -248,7 +248,7 @@
 }
 @media screen and (max-width: 480px) {
     .container {
-        height: 600px;
+        height: 470px;
     }
 }
 
@@ -295,10 +295,10 @@
 }
 /* もう1回きく・答えをきく */
 .repeat {
-    margin-top: 42px;
+    margin-top: 35px;
 }
 .read_answer {
-    margin-top: 20px;
+    margin-top: 10px;
 }
 .repeat img,
 .read_answer img {
