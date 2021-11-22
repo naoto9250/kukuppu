@@ -3,14 +3,12 @@
 ヘッダー
 ****************************/
 .header-play {
-    height: 25vw;
-    max-height: 188px;
+    height: 128px;
 }
 .header-play .inner {
-    width: 88vw;
-    max-width: 660px;
+    width: 90%;
     margin: 0 auto;
-    padding-top: 23px;
+    padding-top: 18px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -21,30 +19,19 @@
             justify-content: space-between;
 }
 .header-play .inner .header-back img {
-    width: 26vw;
-    max-width: 195px;
+    width: 130px;
     height: auto;
 }
 .header-play .inner h1 img {
-    width: 26vw;
-    max-width: 275px;
+    width: 180px;
     height: auto;
-}
-
-@media screen and (max-width: 750px) {
-    .header-play .inner {
-        padding-top: 12px;
-    }
-    .header-play .inner h1 img {
-        width: 30vw;
-    }
 }
 
 /****************************
 再生設定エリア
 ****************************/
 .container {
-    height: 740px;
+    height: 510px;
 }
 .container section {
     text-align: left;
@@ -65,8 +52,7 @@
 /* はじめるボタン・つぎへボタン */
 .btn_play,
 .to_next {
-    width: 34vw;
-    max-width: 260px;
+    width: 170px;
     height: auto;
     margin: 0 auto;
 }
@@ -163,8 +149,7 @@
 }
 .btn_column3 li,
 .btn_column4 li {
-    width: 17vw;
-    max-width: 130px;
+    width: 83px;
     height: auto;
     margin-right: 4px;
 }
@@ -238,11 +223,14 @@
     background-size: contain;
 }
 @media screen and (max-width: 750px) {
+    .btn_column3,
     .btn_column4 {
         border-radius: 13px;
         padding: 3px 4px;
     }
+    .btn_column3 li,
     .btn_column4 li {
+        width: 65px;
         margin-right: 2px;
     }
 }
@@ -271,8 +259,8 @@
 .count {
     position: absolute;
     left: 75%;
-    top: 8%;
-    width: 25vw;
+    top: 1%;
+    width: 120px;
     height: 20vw;
     max-width: 188px;
     max-height: 150px;
@@ -281,16 +269,16 @@
 }
 .count #count_child {
     position: absolute;
-    top: 18%;
+    top: 28%;
     left: 25%;
-    font-size: 2.3em;
+    font-size: 1.5em;
     font-weight: bold;
 }
 .count #count_parent {
     position: absolute;
-    top: 50%;
+    top: 48%;
     left: 50%;
-    font-size: 2.3em;
+    font-size: 1.5em;
     font-weight: bold;
 }
 /* もう1回きく・答えをきく */
@@ -377,15 +365,9 @@
     visibility: visible !important;
 }
 
-@media screen and (max-width: 750px) {
-    .count #count_child,
-    .count #count_parent {
-        font-size: 2em;
-    }
-}
 @media screen and (max-width: 480px) {
     .count {
-        left: 70%;
+        left: 80%;
         top: 11%;
         width: 94px;
         height: 75px;

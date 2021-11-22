@@ -15,22 +15,24 @@ h2::after {
 /****************************
 ヘッダー
 ****************************/
+header {
+    height: 163px;
+}
 .logo-top {
     width: 100%;
     text-align: center;
     position: absolute;
-    top: 40px;
+    top: 15px;
     z-index: 1000;
 }
 .logo-top img {
     width: 72vw;
-    max-width: 537px;
+    max-width: 328px;
     height: auto;
 }
-
-@media screen and (max-width: 750px) {
-    .logo-top {
-        top: 22px;
+@media screen and (max-width: 480px) {
+    header {
+        height: 138px;
     }
 }
 
