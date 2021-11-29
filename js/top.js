@@ -40,9 +40,9 @@ let param = '';
 next_btn.addEventListener('click', function(){
     // よみかたをえらぼう！
     if(random.classList.contains('btn_active01')) {
-        param = '?read=random';
+        param = '?sort=random';
     } else if(all.classList.contains('btn_active01')) {
-        param = '?read=all';
+        param = '?sort=order';
     }
 
     // よむだんをえらぼう！

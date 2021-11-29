@@ -65,26 +65,26 @@
     background: url(../img/btn-play_active.png) center no-repeat;
     background-size: contain;
 }
-.btn_play:active {
+/* .btn_play:active {
     background: url(../img/btn-play_active.png) center no-repeat;
     background-size: contain;
-}
+} */
 .to_next:hover {
     background: url(../img/btn-next-play_active.png) center no-repeat;
     background-size: contain;
 }
-.to_next:active {
+/* .to_next:active {
     background: url(../img/btn-next-play_active.png) center no-repeat;
     background-size: contain;
-}
+} */
 .btn_play:hover img,
 .to_next:hover img {
     visibility: hidden;
 }
-.btn_play:active img,
+/* .btn_play:active img,
 .to_next:active img {
     visibility: hidden;
-}
+} */
 /* ふりがな */
 .jikan,
 .onaji,
@@ -101,11 +101,11 @@
 .kotae::before,
 .mai::before {
     position: absolute;
-    font-size: 0.75rem;
-    top: -13px;
+    font-size: 11px;
+    top: -11px;
     width: 100%;
     text-align: center;
-    line-height: 1;
+    line-height: 11px;
 }
 .jikan::before {
     content: "じ かん";
@@ -127,6 +127,7 @@
 }
 .config_sec .wrapper {
     display: inline-block;
+    margin-bottom: 10px;
 }
 /* 次を読むまでの時間・同じ九九を読む回数・答えを読むまでの時間 */
 .btn_column3,
@@ -297,73 +298,73 @@
     background: url(../img/btn-repeat_hov.png) no-repeat center;
     background-size: contain;
 }
-.repeat:active {
+/* .repeat:active {
     background: url(../img/btn-repeat_hov.png) no-repeat center;
     background-size: contain;
-}
+} */
 .read_answer:hover {
     background: url(../img/btn-answer_hov.png) no-repeat center;
     background-size: contain;
 }
-.read_answer:active {
+/* .read_answer:active {
     background: url(../img/btn-answer_hov.png) no-repeat center;
     background-size: contain;
-}
+} */
 .repeat:hover img,
 .read_answer:hover img {
     visibility: hidden;
 }
-.repeat:active img,
+/* .repeat:active img,
 .read_answer:active img {
     visibility: hidden;
 }
 .repeat:active img,
 .read_answer:active img {
     visibility: hidden;
-}
+} */
 
 /* 1つ前に戻る・とめる */
 .operation #back:hover {
     background: url(../img/btn-back_hov.png) no-repeat center;
     background-size: contain;
 }
-.operation #back:active {
+/* .operation #back:active {
     background: url(../img/btn-back_hov.png) no-repeat center;
     background-size: contain;
-}
+} */
 .operation #play_pause:hover .img_play {
     background: url(../img/btn-play02_hov.png) no-repeat center;
     background-size: contain;
 }
-.operation #play_pause:active .img_play {
+/* .operation #play_pause:active .img_play {
     background: url(../img/btn-play02_hov.png) no-repeat center;
     background-size: contain;
-}
+} */
 .operation #play_pause:hover .btn_pause {
     background: url(../img/btn-pause_hov.png) no-repeat center;
     background-size: contain;
 }
-.operation #play_pause:active .btn_pause {
+/* .operation #play_pause:active .btn_pause {
     background: url(../img/btn-pause_hov.png) no-repeat center;
     background-size: contain;
-}
+} */
 .operation #back:hover img,
 .operation #play_pause:hover img {
     visibility: hidden;
 }
-.operation #back:active img,
+/* .operation #back:active img,
 .operation #play_pause:active img {
     visibility: hidden;
-}
+} */
 .disabled {
     pointer-events: none !important;
 }
 .disabled:hover img {
     visibility: visible !important;
 }
-.disabled:active img {
+/* .disabled:active img {
     visibility: visible !important;
-}
+} */
 
 @media screen and (max-width: 480px) {
     .count {

@@ -5,10 +5,11 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>頭のよくなる九九トランプ ククップ</title>
-	<link rel="stylesheet" href="./css/common.css?v=20211116">
-	<link rel="stylesheet" href="./css/play.css?v=20211116">
+	<link rel="stylesheet" href="./css/common.css?v=20211129">
+	<link rel="stylesheet" href="./css/play.css?v=20211129">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 	<script src="js/jquery-3.6.0.min.js"></script>
+	<!-- <script type="text/javascript" src="/js/audio.min.js"></script> -->
 </head>
 <body>
 	<header class="header-play">
@@ -101,5 +102,36 @@
 		<p>©︎Gakken</p>
 	</footer>
 	<script src="js/play.js"></script>
+	<script>
+		$(function () {
+			switch (getParam('step')) {
+				case '1':
+					$('#player_ttl').html('<img src="./img/txt-play_13.png" alt="１〜３のだんをよむ">');
+					$('#count_parent').html('27');
+					break;
+				case '4':
+					$('#player_ttl').html('<imgsrc ="./img/txt-play_46.png" alt="４〜６のだんをよむ">');
+					$('#count_parent').html('27');
+					break;
+				case '7':
+					$('#player_ttl').html('<img src="./img/txt-play_79.png" alt="７〜９のだんをよむ">');
+					$('#count_parent').html('27');
+					break;
+				default:
+					$('#count_parent').html('81');
+					break;
+			}
+			$.getJSON("json/kuku.json", function (data) {
+				$('#btn_play').click(function() {
+					// 答えを読むまでの時間が「手動」ならば答えを聞くボタンを表示
+					if(readAnswerInterval() == 'm') {
+						$('#read_answer').removeClass('hidden');
+					}
+					// 九九再生イベント
+					init(data);
+				})
+			})
+        })
+	</script>
 </body>
 </html>
