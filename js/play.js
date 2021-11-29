@@ -1,5 +1,3 @@
-// 「はじめる」ボタン
-const btn = document.querySelector("#btn_play");
 // 「つぎへ」ボタン
 const btn_next = document.querySelector("#to_next");
 // 「もう1回きく」ボタン
@@ -8,36 +6,16 @@ const btn_repeat = document.querySelector("#btn_repeat");
 const btn_back = document.querySelector("#back");
 // 「はじめる」&「とめる」ボタン
 const play_pause = document.querySelector("#play_pause");
+// 次の九九再生までの待機時間中か判定用
+let isInterval = false;
 // 答えを読むボタン
 const btn_a  = document.querySelector("#read_answer");
 // 再生する音声ファイルのパス
 let path;
-// 再生する音声ファイルのパス（問題）
-let pathQ;
-// 再生する音声ファイルのパス（答え）
-let pathA;
-// 音声ファイル名の数字1
-let x;
-// 音声ファイル名の数字2
-let y;
-// 音声ファイル名の数字1（順番に再生）
-let ascX = 1;
-// 音声ファイル名の数字2（順番に再生）
-let ascY = 0;
-// 音声ファイル名（問題・答えセット）
-let filename;
-// 音声ファイル名（問題）
-let filenameQ;
-// 音声ファイル名（答え）
-let filenameA;
-// 再生リスト
-let playList = [];
-// 再生リスト（問題）
-let playListQ = [];
-// 再生リスト（答え）
-let playListA = [];
 // 答えが再生済みか判定用
 let answerPlayed = false;
+// 遅延実行処理格納用
+var timeoutFunc = null;
 
 /**
  * スマホではhoverを無効にする
@@ -62,24 +40,6 @@ if (touch) { // remove all :hover stylesheets
         }
     } catch (ex) {}
 }
-
-/**
- * 見出し・カウンターを選択した段に変更
- */
-window.addEventListener("DOMContentLoaded", (function () {
-    const ttl = document.getElementById('player_ttl');
-    const parent = document.getElementById('count_parent');
-    if(getParam('step') == '1') {
-        ttl.innerHTML = '<img src="./img/txt-play_13.png" alt="１〜３のだんをよむ">';
-        parent.innerHTML = '27';
-    } else if(getParam('step') == '4') {
-        ttl.innerHTML = '<img src="./img/txt-play_46.png" alt="４〜６のだんをよむ">';
-        parent.innerHTML = '27';
-    } else if(getParam('step') == '7') {
-        ttl.innerHTML = '<img src="./img/txt-play_79.png" alt="７〜９のだんをよむ">';
-        parent.innerHTML = '27';
-    }
-}));
 
 /**
  * 選択されたボタンににselectクラスを付与
@@ -154,19 +114,6 @@ function getParam(name, url) {
 }
 
 /**
- * 九九をランダムに再生するか、順番に再生するか
- * 
- * 初期値：ランダム
- */
-function isRandom() {
-    let random_flg = true;
-    if(getParam('read') == 'all') {
-        random_flg = false;
-    }
-    return random_flg;
-}
-
-/**
  * 答えを読むまでの時間を取得
  * 
  * @return  interval_time インターバルの時間 {0=つづけて(デフォルト), 3=3秒, 6=秒, m=手動}
@@ -194,382 +141,6 @@ function readAnswerInterval() {
         interval_time = 'm';
     }
     return interval_time;
-}
-
-/**
- * x*yのxの値をランダムに生成
- */
-function getX() {
-    let num;
-    // 選択している九九の段を判定
-    if(getParam('step') == 'all') {
-        // 全部の段
-        num = Math.floor( Math.random() * 9 ) + 1;
-    } else if(getParam('step') == '1') {
-        // １〜３の段
-        num = Math.floor( Math.random() * 3 ) + 1;
-    } else if(getParam('step') == '4') {
-        // ４〜６の段
-        num = Math.floor( Math.random() * 3 ) + 4;
-    } else if(getParam('step') == '7') {
-        // ７〜９の段
-        num = Math.floor( Math.random() * 3 ) + 7;
-    }
-    return num;
-}
-
-/**
- * ランダム再生：問題と答えがセットのファイルを取得
- */
-function getRandomFileAll() {
-    if(getParam('step') == 'all') {
-        // 全ての段81パターンのパスを生成
-        while(playList.length < 81) {
-            // 音声ファイルのパスを生成
-            x = getX();
-            y = Math.floor( Math.random() * 9 ) + 1;
-            filename = 'k'+ x + y +'.mp3';
-            path = 'audio/all/' + filename;
-
-            // パスが重複すればリストに存在しないパスになるまでループ
-            while(playList.includes(path)) {
-                if(playList.length >= 81) {
-                    break;
-                }
-                // 音声ファイルのパスを再度生成
-                x = getX();
-                y = Math.floor( Math.random() * 9 ) + 1;
-                filename = 'k'+ x + y +'.mp3';
-                path = 'audio/all/' + filename;
-            }
-
-            // 再生リストに追加
-            playList.push(path);
-
-        }
-
-    } else if(getParam('step') != 'all') {
-        // 選択した段27パターンのパスを生成
-        while(playList.length < 27) {
-            // 音声ファイルのパスを生成
-            x = getX();
-            y = Math.floor( Math.random() * 9 ) + 1;
-            filename = 'k'+ x + y +'.mp3';
-            path = 'audio/all/' + filename;
-
-            // パスが重複すればリストに存在しないパスになるまでループ
-            while(playList.includes(path)) {
-                if(playList.length >= 27) {
-                    break;
-                }
-                // 音声ファイルのパスを再度生成
-                x = getX();
-                y = Math.floor( Math.random() * 9 ) + 1;
-                filename = 'k'+ x + y +'.mp3';
-                path = 'audio/all/' + filename;
-            }
-
-            // 再生リストに追加
-            playList.push(path);
-            
-        }
-
-    }
-    return playList;
-}
-
-/**
- * ランダム再生：問題と答えのファイルを別々に取得
- */
-function getRandomFileQA() {
-    if(getParam('step') == 'all') {
-        // 全ての段81パターンのパスを生成
-        while(playListQ.length < 81) {
-            // 音声ファイルのパスを生成
-            x = getX();
-            y = Math.floor( Math.random() * 9 ) + 1;
-
-            // 問題の音声ファイル名を生成
-            filenameQ = 'q'+ x + y +'.mp3';
-            // 答えの音声ファイル名を生成
-            filenameA = 'a'+ x + y +'.mp3';
-
-            // 問題のパスを作成
-            pathQ = 'audio/q/' + filenameQ;
-            // 答えのパスを作成
-            pathA = 'audio/a/' + filenameA;
-
-            // パスが重複すればリストに存在しないパスになるまでループ
-            while(playListQ.includes(pathQ)) {
-                if(playListQ.length >= 81) {
-                    break;
-                }
-                // 音声ファイルのパスを再度生成
-                x = getX();
-                y = Math.floor( Math.random() * 9 ) + 1;
-                filenameQ = 'q'+ x + y +'.mp3';
-                filenameA = 'a'+ x + y +'.mp3';
-                pathQ = 'audio/q/' + filenameQ;
-                pathA = 'audio/a/' + filenameA;
-            }
-
-            // 再生リストに追加
-            playListQ.push(pathQ);
-            playListA.push(pathA);
-        }
-
-    } else if(getParam('step') != 'all') {
-        // 選択した段27パターンのパスを生成
-        while(playListQ.length < 27) {
-            // 音声ファイルのパスを生成
-            x = getX();
-            y = Math.floor( Math.random() * 9 ) + 1;
-
-            // 問題の音声ファイル名を生成
-            filenameQ = 'q'+ x + y +'.mp3';
-            // 答えの音声ファイル名を生成
-            filenameA = 'a'+ x + y +'.mp3';
-
-            // 問題のパスを作成
-            pathQ = 'audio/q/' + filenameQ;
-            // 答えのパスを作成
-            pathA = 'audio/a/' + filenameA;
-
-            // パスが重複すればリストに存在しないパスになるまでループ
-            while(playListQ.includes(pathQ)) {
-                if(playListQ.length >= 27) {
-                    break;
-                }
-                // 音声ファイルのパスを再度生成
-                x = getX();
-                y = Math.floor( Math.random() * 9 ) + 1;
-                filenameQ = 'q'+ x + y +'.mp3';
-                filenameA = 'a'+ x + y +'.mp3';
-                pathQ = 'audio/q/' + filenameQ;
-                pathA = 'audio/a/' + filenameA;
-            }
-
-            // 再生リストに追加
-            playListQ.push(pathQ);
-            playListA.push(pathA);
-        }
-    }
-
-    return {
-        audioQ: playListQ,
-        audioA: playListA
-    }
-}
-
-/**
- * 順番に再生：問題と答えがセットのファイルを取得
- */
-function getAscFileAll() {
-    // 選択している九九の段を判定
-    if(getParam('step') == 'all') { // 全部の段
-        while(playList.length < 81) {
-            // x*yのyが9を越えたら次の段へ、yの値をリセット
-            if(ascY >= 9) {
-                ascX = ascX + 1;
-                ascY = 0;
-            }
-            // x*yのxが9を越えたら処理を終了
-            if(ascX > 9) {
-                break;
-            }
-
-            ascY = ascY + 1;
-
-            filename = 'k'+ ascX + ascY +'.mp3';
-            path = 'audio/all/' + filename;
-
-            playList.push(path);
-        }
-
-    } else if(getParam('step') == '1') { // １〜３の段
-        while(playList.length < 27) {
-            // x*yのyが9を越えたら次の段へ、yの値をリセット
-            if(ascY >= 9) {
-                ascX = ascX + 1;
-                ascY = 0;
-            }
-            // x*yのxが9を越えたら処理を終了
-            if(ascX > 3) {
-                break;
-            }
-
-            ascY = ascY + 1;
-
-            filename = 'k'+ ascX + ascY +'.mp3';
-            path = 'audio/all/' + filename;
-
-            playList.push(path);
-        }
-
-    } else if(getParam('step') == '4') { // ４〜６の段
-        while(playList.length < 27) {
-            // 4の段からスタート
-            if(ascX <= 4) {
-                ascX = 4;
-            }
-            // x*yのyが9を越えたら次の段へ、yの値をリセット
-            if(ascY >= 9) {
-                ascX = ascX + 1;
-                ascY = 0;
-            }
-            // x*yのxが9を越えたら処理を終了
-            if(ascX > 6) {
-                break;
-            }
-
-            ascY = ascY + 1;
-
-            filename = 'k'+ ascX + ascY +'.mp3';
-            path = 'audio/all/' + filename;
-
-            playList.push(path);
-        }
-
-    } else if(getParam('step') == '7') { // ７〜９の段
-        while(playList.length < 27) {
-            // 4の段からスタート
-            if(ascX <= 7) {
-                ascX = 7;
-            }
-            // x*yのyが9を越えたら次の段へ、yの値をリセット
-            if(ascY >= 9) {
-                ascX = ascX + 1;
-                ascY = 0;
-            }
-            // x*yのxが9を越えたら処理を終了
-            if(ascX > 9) {
-                break;
-            }
-
-            ascY = ascY + 1;
-
-            filename = 'k'+ ascX + ascY +'.mp3';
-            path = 'audio/all/' + filename;
-
-            playList.push(path);
-        }
-    }
-    return playList;
-}
-
-/**
- * 順番に再生、問題と答えのファイルを別々に取得
- */
-function getAscFileQA() {
-    // 選択している九九の段を判定
-    if(getParam('step') == 'all') { // 全部の段
-        while(playList.length < 81) {
-            // x*yのyが9を越えたら次の段へ、yの値をリセット
-            if(ascY >= 9) {
-                ascX = ascX + 1;
-                ascY = 0;
-            }
-            // x*yのxが9を越えたら処理を終了
-            if(ascX > 9) {
-                break;
-            }
-
-            ascY = ascY + 1;
-
-            filenameQ = 'q'+ ascX + ascY +'.mp3';
-            pathQ = 'audio/q/' + filenameQ;
-            filenameA = 'a'+ ascX + ascY +'.mp3';
-            pathA = 'audio/a/' + filenameA;
-
-            // 再生リストに追加
-            playListQ.push(pathQ);
-            playListA.push(pathA);
-        }
-
-    } else if(getParam('step') == '1') { // １〜３の段
-        while(playList.length < 27) {
-            // x*yのyが9を越えたら次の段へ、yの値をリセット
-            if(ascY >= 9) {
-                ascX = ascX + 1;
-                ascY = 0;
-            }
-            // x*yのxが9を越えたら処理を終了
-            if(ascX > 3) {
-                break;
-            }
-
-            ascY = ascY + 1;
-
-            filenameQ = 'q'+ ascX + ascY +'.mp3';
-            pathQ = 'audio/q/' + filenameQ;
-            filenameA = 'a'+ ascX + ascY +'.mp3';
-            pathA = 'audio/a/' + filenameA;
-
-            // 再生リストに追加
-            playListQ.push(pathQ);
-            playListA.push(pathA);
-        }
-
-    } else if(getParam('step') == '4') { // ４〜６の段
-        while(playList.length < 27) {
-            // 4の段からスタート
-            if(ascX <= 4) {
-                ascX = 4;
-            }
-            // x*yのyが9を越えたら次の段へ、yの値をリセット
-            if(ascY >= 9) {
-                ascX = ascX + 1;
-                ascY = 0;
-            }
-            // x*yのxが9を越えたら処理を終了
-            if(ascX > 6) {
-                break;
-            }
-
-            ascY = ascY + 1;
-
-            filenameQ = 'q'+ ascX + ascY +'.mp3';
-            pathQ = 'audio/q/' + filenameQ;
-            filenameA = 'a'+ ascX + ascY +'.mp3';
-            pathA = 'audio/a/' + filenameA;
-
-            // 再生リストに追加
-            playListQ.push(pathQ);
-            playListA.push(pathA);
-        }
-
-    } else if(getParam('step') == '7') { // ７〜９の段
-        while(playList.length < 27) {
-            // 4の段からスタート
-            if(ascX <= 7) {
-                ascX = 7;
-            }
-            // x*yのyが9を越えたら次の段へ、yの値をリセット
-            if(ascY >= 9) {
-                ascX = ascX + 1;
-                ascY = 0;
-            }
-            // x*yのxが9を越えたら処理を終了
-            if(ascX > 9) {
-                break;
-            }
-
-            ascY = ascY + 1;
-
-            filenameQ = 'q'+ ascX + ascY +'.mp3';
-            pathQ = 'audio/q/' + filenameQ;
-            filenameA = 'a'+ ascX + ascY +'.mp3';
-            pathA = 'audio/a/' + filenameA;
-
-            // 再生リストに追加
-            playListQ.push(pathQ);
-            playListA.push(pathA);
-        }
-    }
-    return {
-        audioQ: playListQ,
-        audioA: playListA
-    }
 }
 
 /**
@@ -618,6 +189,7 @@ function audioPlay(path) {
  * 次の九九を読み上げる
  */
 function playNextAudio() {
+    audio.pause();
     // 次を読むまでの時間を取得
     let next_time = $('#next_time .select').data('next');
     if(next_time == 'manual') {
@@ -625,10 +197,43 @@ function playNextAudio() {
         return;
     } else if(next_time == 1000 || next_time == 5000 || next_time == 10000) {
         // 5秒、10秒、1秒の場合
-        setTimeout(function(){
-            init();
+        timeoutFunc = setTimeout(function () {
+
+            // 答え再生済みフラグを折る
+            answerPlayed = false;
+
+            init(voiceList);
+
         }, next_time);
     }
+}
+
+/**
+ * setTimeoutをキャンセルする
+ */
+function clearGlobalTimeoutFunc() {
+    if (timeoutFunc !== null) {
+
+        // setTimeout() メソッドの動作をキャンセルする
+        clearTimeout(timeoutFunc);
+
+        timeoutFunc = null;
+    }
+}
+
+/**
+ * 配列のシャッフル
+ */
+function sortRandom(array) {
+    for(var i = (array.length - 1); 0 < i; i--){
+        // 0〜(i+1)の範囲で値を取得
+        var r = Math.floor(Math.random() * (i + 1));
+        // 要素の並び替えを実行
+        var tmp = array[i];
+        array[i] = array[r];
+        array[r] = tmp;
+    }
+    return array;
 }
 
 /**
@@ -636,7 +241,7 @@ function playNextAudio() {
  */
 function playCounter() {
     counter++;
-    if(!playList.length && !playListQ.length) {
+    if(!voiceList.length) {
         child.innerHTML = '01';
     } else if(counter < 10) {
         child.innerHTML = '0' + counter;
@@ -656,8 +261,13 @@ let audioListQA;
 let child = document.getElementById('count_child');
 // 現在の再生数
 let counter = 0;
+// 音声データリストの格納用
+var voiceData;
+// 取得したJsonデータの格納用
+var voiceList;
 
-function init() {
+function init(urlList) {
+    voiceList = urlList;
     // 再生用の画面に切り替え
     $('#config_sec').addClass('dsp_none');
     $('#read_sec').removeClass('dsp_none');
@@ -681,75 +291,148 @@ function init() {
     repeatCounter = 0;
 
     // ランダム判定
-    if(isRandom()) {
-        if(readAnswerInterval() == 0) { //  答えを読むまでの時間「つづけて」
-            // 音声リストを取得
-            while(audioListQA === undefined || audioListQA === null) {
-                audioListQA = getRandomFileAll();
-            }
-            // 音声を再生
-            audioPlay(audioListQA[counter - 1]);
-            return;
+    switch (getParam('sort')) {
+        // 順番に読む
+        case 'order':
+            //  答えを読むまでの時間「つづけて」
+            if(readAnswerInterval() == 0) {
+                //  音声リストを取得
+                switch (getParam('step')) {
+                    case '1':
+                        voiceData = voiceList.filter(voiceList => voiceList.type === 'qa' && voiceList.StepGroup === 1);
+                        // 1〜3の段の音声を再生
+                        audioPlay(voiceData[counter - 1].VoiceUrl);
+                        break;
+                    case '4':
+                        voiceData = voiceList.filter(voiceList => voiceList.type === 'qa' && voiceList.StepGroup === 4);
+                        // ４〜6の段の音声を再生
+                        audioPlay(voiceData[counter - 1].VoiceUrl);
+                            break;
+                    case '7':
+                        voiceData = voiceList.filter(voiceList => voiceList.type === 'qa' && voiceList.StepGroup === 7);
+                        // ７〜9の段音声を再生
+                        audioPlay(voiceData[counter - 1].VoiceUrl);
+                            break;
+                    default:
+                        voiceData = voiceList.filter(voiceList => voiceList.type === 'qa');
+                        // 全ての段の音声を再生
+                        audioPlay(voiceData[counter - 1].VoiceUrl);
+                            break;
+                }
 
-        } else if(readAnswerInterval() == 3000 || readAnswerInterval() == 6000 || readAnswerInterval() == 'm') { // 答えを読むまでの時間「3,6秒,手動」
+            }
             // 問題と答えの音声ファイルを別々に取得
-            while(audioQ === undefined || audioQ === null || audioA === undefined || audioA === null) {
-                var {audioQ, audioA} = getRandomFileQA();
-                playListQ = audioQ;
-                playListA = audioA;
+            else if(readAnswerInterval() == 3000 || readAnswerInterval() == 6000 || readAnswerInterval() == 'm') { // 答えを読むまでの時間「3,6秒,手動」
+                //  音声リストを取得
+                switch (getParam('step')) {
+                    case '1':
+                        voiceData = voiceList.filter(voiceList => voiceList.type === 'q' && voiceList.StepGroup === 1);
+                        // 1〜3の段の音声を再生
+                        audioPlay(voiceData[counter - 1].VoiceUrl);
+                        break;
+                    case '4':
+                        voiceData = voiceList.filter(voiceList => voiceList.type === 'q' && voiceList.StepGroup === 4);
+                        // ４〜6の段の音声を再生
+                        audioPlay(voiceData[counter - 1].VoiceUrl);
+                            break;
+                    case '7':
+                        voiceData = voiceList.filter(voiceList => voiceList.type === 'q' && voiceList.StepGroup === 7);
+                        // ７〜9の段音声を再生
+                        audioPlay(voiceData[counter - 1].VoiceUrl);
+                            break;
+                    default:
+                        voiceData = voiceList.filter(voiceList => voiceList.type === 'q');
+                        // 全ての段の音声を再生
+                        audioPlay(voiceData[counter - 1].VoiceUrl);
+                            break;
+                }
+    
             }
-            // 問題の音声ファイルを再生
-            audioPlay(playListQ[counter - 1]);
-            return;
+            break;
 
-        }
-    } else if(!isRandom()) {
-        if(readAnswerInterval() == 0) { //  答えを読むまでの時間「つづけて」
-            //  音声リストを取得
-            while(audioListQA === undefined || audioListQA === null) {
-                audioListQA = getAscFileAll();
+        // ランダム（デフォルト）
+        default:
+            //  答えを読むまでの時間「つづけて」
+            if(readAnswerInterval() == 0) {
+                //  音声リストを取得
+                switch (getParam('step')) {
+                    case '1':
+                        voiceData = voiceList.filter(voiceList => voiceList.type === 'qa' && voiceList.StepGroup === 1);
+                        sortRandom(voiceData);
+                        // 1〜3の段の音声を再生
+                        audioPlay(voiceData[counter - 1].VoiceUrl);
+                        break;
+                    case '4':
+                        voiceData = voiceList.filter(voiceList => voiceList.type === 'qa' && voiceList.StepGroup === 4);
+                        sortRandom(voiceData);
+                        // ４〜6の段の音声を再生
+                        audioPlay(voiceData[counter - 1].VoiceUrl);
+                            break;
+                    case '7':
+                        voiceData = voiceList.filter(voiceList => voiceList.type === 'qa' && voiceList.StepGroup === 7);
+                        sortRandom(voiceData);
+                        // ７〜9の段音声を再生
+                        audioPlay(voiceData[counter - 1].VoiceUrl);
+                            break;
+                    default:
+                        voiceData = voiceList.filter(voiceList => voiceList.type === 'qa');
+                        sortRandom(voiceData);
+                        // 全ての段の音声を再生
+                        audioPlay(voiceData[counter - 1].VoiceUrl);
+                            break;
+                }
+    
             }
-            // 音声を再生
-            audioPlay(audioListQA[counter - 1]);
-            return;
-
-        } else if(readAnswerInterval() == 3000 || readAnswerInterval() == 6000 || readAnswerInterval() == 'm') { // 答えを読むまでの時間「3,6秒,手動」
             // 問題と答えの音声ファイルを別々に取得
-            while(audioQ === undefined || audioQ === null || audioA === undefined || audioA === null) {
-                var {audioQ, audioA} = getAscFileQA();
-                playListQ = audioQ;
-                playListA = audioA;
+            else if(readAnswerInterval() == 3000 || readAnswerInterval() == 6000 || readAnswerInterval() == 'm') { // 答えを読むまでの時間「3,6秒,手動」
+                //  音声リストを取得
+                switch (getParam('step')) {
+                    case '1':
+                        voiceData = voiceList.filter(voiceList => voiceList.type === 'q' && voiceList.StepGroup === 1);
+                        sortRandom(voiceData);
+                        // 1〜3の段の音声を再生
+                        audioPlay(voiceData[counter - 1].VoiceUrl);
+                        break;
+                    case '4':
+                        voiceData = voiceList.filter(voiceList => voiceList.type === 'q' && voiceList.StepGroup === 4);
+                        sortRandom(voiceData);
+                        // ４〜6の段の音声を再生
+                        audioPlay(voiceData[counter - 1].VoiceUrl);
+                            break;
+                    case '7':
+                        voiceData = voiceList.filter(voiceList => voiceList.type === 'q' && voiceList.StepGroup === 7);
+                        sortRandom(voiceData);
+                        // ７〜9の段音声を再生
+                        audioPlay(voiceData[counter - 1].VoiceUrl);
+                            break;
+                    default:
+                        voiceData = voiceList.filter(voiceList => voiceList.type === 'q');
+                        sortRandom(voiceData);
+                        // 全ての段の音声を再生
+                        audioPlay(voiceData[counter - 1].VoiceUrl);
+                            break;
+                }
+    
             }
-            // 問題の音声ファイルを再生
-            audioPlay(playListQ[counter - 1]);
-            return;
-
-        }
+            break;
     }
 }
 
 /**
  * 各ボタンのクリックイベント
  */
-// ”はじめる”ボタン
-btn.addEventListener("click", ()=>{
-    // 答えを読むまでの時間が「手動」ならば答えを聞くボタンを表示
-    if(readAnswerInterval() == 'm') {
-        $('#read_answer').removeClass('hidden');
-    }
-    // 九九再生イベント
-    init();
-});
-
 // ”つぎへ”ボタン
 btn_next.addEventListener("click", ()=>{
+    // 再生数カウンター
+    playCounter();
+
+    audio.pause();
+    
+    //setTimeoutの初期化
+    clearGlobalTimeoutFunc();
+
     // 繰り返しカウンターを初期化
     repeatCounter = 0;
-
-    // 次へボタンを一度非活性に
-    if(!btn_next.classList.contains('disabled')) {
-        btn_next.classList.add('disabled');
-    }
 
     // 1枚目の再生であれば戻るボタンを非活性にする
     if(counter < 1) {
@@ -762,21 +445,21 @@ btn_next.addEventListener("click", ()=>{
         }
     }
 
-    // 再生数カウンター
-    playCounter();
-
     if(readAnswerInterval() != 0) {
         // 問題と答えが別々の場合は答え再生済みフラグを折る
         answerPlayed = false;
-        audioPlay(playListQ[counter - 1]);
+        audioPlay(voiceData[counter - 1].VoiceUrl);
     } else if(readAnswerInterval() == 0) {
         // 問題と答えがセット
-        audioPlay(audioListQA[counter - 1]);
+        audioPlay(voiceData[counter - 1].VoiceUrl);
     }
 });
 
 // もう1回聞くボタン
 btn_repeat.addEventListener("click", ()=>{
+    //setTimeoutの初期化
+    clearGlobalTimeoutFunc();
+    
     // 繰り返しカウンターを初期化
     repeatCounter = 0;
 
@@ -784,16 +467,19 @@ btn_repeat.addEventListener("click", ()=>{
     if(readAnswerInterval() != 0) {
         // 問題と答えが別々の場合
         answerPlayed = false;
-        audioPlay(playListQ[counter - 1]);
+        audioPlay(voiceData[counter - 1].VoiceUrl);
     } else if(readAnswerInterval() == 0) {
         // 問題と答えがセット
-        audioPlay(audioListQA[counter - 1]);
+        audioPlay(voiceData[counter - 1].VoiceUrl);
     }
     return;
 });
 
 // 一つ前に戻るボタン
 btn_back.addEventListener("click", ()=>{
+    //setTimeoutの初期化
+    clearGlobalTimeoutFunc();
+    
     if(counter >= 2) {
         // 繰り返しカウンターを初期化
         repeatCounter = 0;
@@ -821,42 +507,109 @@ btn_back.addEventListener("click", ()=>{
         if(readAnswerInterval() != 0) {
             // 問題と答えが別々の場合
             answerPlayed = false;
-            audioPlay(playListQ[counter - 1]);
+            audioPlay(voiceData[counter - 1].VoiceUrl);
         } else if(readAnswerInterval() == 0) {
             // 問題と答えがセット
-            audioPlay(audioListQA[counter - 1]);
+            audioPlay(voiceData[counter - 1].VoiceUrl);
         }
     }
     return;
 });
 
 // ”とめる”、”はじめる”ボタン
-play_pause.addEventListener("click", ()=>{    
-    // pausedがtrue=>停止, false=>再生中
-    if( !audio.paused ){
-        play_pause.innerHTML = '<div class="img_play"><img src="./img/btn-play02.png" alt="はじめる"></div>';  // 「再生ボタン」に切り替え
+play_pause.addEventListener("click", ()=>{
+    //setTimeoutの初期化
+    clearGlobalTimeoutFunc();
+
+    // 再生中に一時停止ボタンを押した場合（pausedがtrue=>停止, false=>再生中）
+    if(!audio.paused){
+        isInterval = false;
+
+        play_pause.innerHTML = '<div class="img_play"><img src="./img/btn-play02.png" alt="はじめる"></div>';
+
         audio.pause();
-    } else {
-        play_pause.innerHTML = '<div class="btn_pause"><img src="./img/btn-pause.png" alt="とめる"></div>';  // 「一時停止ボタン」に切り替え
+    }
+
+    // 次の九九再生までの待機時間中に止めるボタンを押した場合
+    else if(audio.paused && isInterval && play_pause.innerHTML == '<div class="btn_pause"><img src="./img/btn-pause.png" alt="とめる"></div>') {
+
+        play_pause.innerHTML = '<div class="img_play"><img src="./img/btn-play02.png" alt="はじめる"></div>';
+
+        audio.pause();
+    }
+
+    // 次の九九再生までの待機時間中に始めるボタンを押した場合
+    else if(audio.paused && isInterval && play_pause.innerHTML == '<div class="img_play"><img src="./img/btn-play02.png" alt="はじめる"></div>') {
+
+        isInterval = false;
+        
+        play_pause.innerHTML = '<div class="btn_pause"><img src="./img/btn-pause.png" alt="とめる"></div>';
+
+        // 問題と答えがセットの場合
+        if(readAnswerInterval() == 0) {
+            repeatVoice(voiceData[counter - 1].VoiceUrl);
+        }
+        
+        // 問題と答えを別々に読む場合
+        if(readAnswerInterval() == 3000 && !answerPlayed || readAnswerInterval() == 6000 && !answerPlayed) { // 答えが未再生
+            // 答えのURLに変換
+            var a = voiceData[counter - 1].VoiceUrl.replace('/q/q', '/a/a');
+
+            // 答えを読むまでの時間が3秒/6秒
+            timeoutFunc = setTimeout(function () {
+                // 答え再生済みフラグを立てる
+                answerPlayed = true;
+
+                // 選択した時間待機して再生
+                audioPlay(a);
+                return;
+            }, readAnswerInterval());
+
+        } else if(readAnswerInterval() == 'm' && !answerPlayed) { // 答えが未再生
+            // 手動の場合は答えを読むボタンのクリックイベントで再生
+            return;
+
+        } else if(readAnswerInterval() != 0 && answerPlayed) { // 答えが再生済み
+            // 答え再生済みフラグを折る
+            answerPlayed = false;
+            
+            // 答えが再生済みであれば繰り返し再生処理へ
+            repeatVoice(voiceData[counter - 1].VoiceUrl);
+            return;
+        }
+    }
+
+    // 一時停止中の場合
+    else if(audio.paused) {
+
+        isInterval = false;
+        
+        play_pause.innerHTML = '<div class="btn_pause"><img src="./img/btn-pause.png" alt="とめる"></div>';
+
         audio.play();
     }
 });
 
 // 答えを読むボタン
 btn_a.addEventListener("click", ()=>{
-    if(playListA) {
-        // 答え再生済みフラグを立てる
-        answerPlayed = true;
-        // 答えを再生
-        audioPlay(playListA[counter - 1]);
-    }    
+    //setTimeoutの初期化
+    clearGlobalTimeoutFunc();
+
+    // 答えのURLに変換
+    var a = voiceData[counter - 1].VoiceUrl.replace('/q/q', '/a/a');
+
+    // 答え再生済みフラグを立てる
+    answerPlayed = true;
+    // 答えを再生
+    audioPlay(a);
+    
     return;
 });
 
 /**
  * 繰り返し再生
  */
-function repeatPlay(audioList) {
+function repeatVoice(repeatData) {
     // 繰り返し回数カウント
     repeatCounter++;
 
@@ -879,7 +632,9 @@ function repeatPlay(audioList) {
     } else if(repeat == 2 && repeatCounter < 2 || repeat == 3 && repeatCounter < 3) {
         // 2回または3回再生
         audio.currentTime = 0;
-        audioPlay(audioList[counter - 1]);
+        timeoutFunc = setTimeout(function () {
+            audioPlay(repeatData);
+        }, 1000);
         
     } else {
         // 全ての音声が再生されればポップアップ表示
@@ -900,38 +655,38 @@ function repeatPlay(audioList) {
  * 再生終了時のイベント
  */
 audio.addEventListener("ended", ()=>{
-    // はじめる・とめるボタンを非活性に
-    if(!play_pause.classList.contains('disabled')) {
-        play_pause.classList.add('disabled');
-    }
+
+    // 「一時停止ボタン」に切り替え
+    play_pause.innerHTML = '<div class="btn_pause"><img src="./img/btn-pause.png" alt="とめる"></div>';
+    isInterval = true;
 
     // 問題と答えがセットの場合
     if(readAnswerInterval() == 0) {
-        repeatPlay(audioListQA);
-        return;
+        repeatVoice(voiceData[counter - 1].VoiceUrl);
     }
 
     // 問題と答えを別々に読む場合
     if(readAnswerInterval() == 3000 && !answerPlayed || readAnswerInterval() == 6000 && !answerPlayed) { // 答えが未再生
+        // 答えのURLに変換
+        var a = voiceData[counter - 1].VoiceUrl.replace('/q/q', '/a/a');
+
         // 答えを読むまでの時間が3秒/6秒
-        setTimeout(function(){
+        timeoutFunc = setTimeout(function () {
             // 答え再生済みフラグを立てる
             answerPlayed = true;
 
             // 選択した時間待機して再生
-            audioPlay(playListA[counter - 1]);
+            audioPlay(a);
             return;
-        },readAnswerInterval());
+        }, readAnswerInterval());
 
     } else if(readAnswerInterval() == 'm' && !answerPlayed) { // 答えが未再生
         // 手動の場合は答えを読むボタンのクリックイベントで再生
         return;
 
     } else if(readAnswerInterval() != 0 && answerPlayed) { // 答えが再生済み
-        // 答え再生済みフラグを折る
-        answerPlayed = false;
         // 答えが再生済みであれば繰り返し再生処理へ
-        repeatPlay(playListQ);
+        repeatVoice(voiceData[counter - 1].VoiceUrl);
         return;
     }
 });

@@ -14,6 +14,8 @@ body {
         border-left: none;
         border-right: none;
         border-bottom: none;
+        background-image: url(../img/background.png);
+        background-size: contain;
     }
 }
 /****************************
@@ -23,14 +25,15 @@ h1 {
     margin: 0;
 }
 h2 {
-    font-size: 1.5em;
+    font-size: 24px;
     margin: 0;
     font-family: 'Hiragino Kaku Gothic ProN','ヒラギノ角ゴ ProN W3','ヒラギノ角ゴ StdN','Hiragino Kaku Gothic StdN','Hiragino Kaku Gothic ProN','ヒラギノ角ゴ ProN W3','メイリオ', Meiryo,sans-serif;
 }
 h3 {
-    font-size: 1.5em;
-    margin: 15px 0 0;
+    font-size: 24px;
+    margin: 15px 0 5px;
     font-family: 'Hiragino Kaku Gothic ProN','ヒラギノ角ゴ ProN W3','ヒラギノ角ゴ StdN','Hiragino Kaku Gothic StdN','Hiragino Kaku Gothic ProN','ヒラギノ角ゴ ProN W3','メイリオ', Meiryo,sans-serif;
+    line-height: 24px;
 }
 a {
     text-decoration: none;
@@ -103,6 +106,7 @@ footer p {
 @media screen and (max-width: 480px) {
     footer {
         height: 72px;
+        background: none;
     }
 }
 
@@ -141,7 +145,7 @@ li {
 }
 @media screen and (max-width: 480px) {
     .container {
-        height: 355px;
+        height: 365px;
     }
 }
 
