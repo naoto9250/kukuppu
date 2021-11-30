@@ -202,7 +202,26 @@ function playNextAudio() {
             // 答え再生済みフラグを折る
             answerPlayed = false;
 
-            init(voiceList);
+            // 再生数カウンターを一つ上げる
+            playCounter();
+
+            // 再生カウンターが1以下の場合戻るボタンを非活性にする
+            if(counter <= 1) {
+                if(!btn_back.classList.contains('disabled')) {
+                    btn_back.classList.add('disabled');
+                }    
+            } else {
+                // 再生カウンターが2以上場合戻るボタンを活性にする
+                if(btn_back.classList.contains('disabled')) {
+                    btn_back.classList.remove('disabled');
+                }
+            }
+
+            // 繰り返し再生の設定を初期化
+            repeatCounter = 0;
+            
+            // 音声を再生
+            audioPlay(voiceData[counter - 1].VoiceUrl);
 
         }, next_time);
     }
@@ -299,23 +318,23 @@ function init(urlList) {
                 //  音声リストを取得
                 switch (getParam('step')) {
                     case '1':
+                        // 1〜3の段の音声を取得し再生
                         voiceData = voiceList.filter(voiceList => voiceList.type === 'qa' && voiceList.StepGroup === 1);
-                        // 1〜3の段の音声を再生
                         audioPlay(voiceData[counter - 1].VoiceUrl);
                         break;
                     case '4':
+                        // ４〜6の段の音声を取得し再生
                         voiceData = voiceList.filter(voiceList => voiceList.type === 'qa' && voiceList.StepGroup === 4);
-                        // ４〜6の段の音声を再生
                         audioPlay(voiceData[counter - 1].VoiceUrl);
                             break;
                     case '7':
+                        // ７〜9の段音声を取得し再生
                         voiceData = voiceList.filter(voiceList => voiceList.type === 'qa' && voiceList.StepGroup === 7);
-                        // ７〜9の段音声を再生
                         audioPlay(voiceData[counter - 1].VoiceUrl);
                             break;
                     default:
-                        voiceData = voiceList.filter(voiceList => voiceList.type === 'qa');
                         // 全ての段の音声を再生
+                        voiceData = voiceList.filter(voiceList => voiceList.type === 'qa');
                         audioPlay(voiceData[counter - 1].VoiceUrl);
                             break;
                 }
@@ -326,23 +345,23 @@ function init(urlList) {
                 //  音声リストを取得
                 switch (getParam('step')) {
                     case '1':
+                        // 1〜3の段の音声を取得し再生
                         voiceData = voiceList.filter(voiceList => voiceList.type === 'q' && voiceList.StepGroup === 1);
-                        // 1〜3の段の音声を再生
                         audioPlay(voiceData[counter - 1].VoiceUrl);
                         break;
                     case '4':
+                        // ４〜6の段の音声を取得し再生
                         voiceData = voiceList.filter(voiceList => voiceList.type === 'q' && voiceList.StepGroup === 4);
-                        // ４〜6の段の音声を再生
                         audioPlay(voiceData[counter - 1].VoiceUrl);
                             break;
                     case '7':
+                        // ７〜9の段音声を取得し再生
                         voiceData = voiceList.filter(voiceList => voiceList.type === 'q' && voiceList.StepGroup === 7);
-                        // ７〜9の段音声を再生
                         audioPlay(voiceData[counter - 1].VoiceUrl);
                             break;
                     default:
-                        voiceData = voiceList.filter(voiceList => voiceList.type === 'q');
                         // 全ての段の音声を再生
+                        voiceData = voiceList.filter(voiceList => voiceList.type === 'q');
                         audioPlay(voiceData[counter - 1].VoiceUrl);
                             break;
                 }
@@ -357,27 +376,27 @@ function init(urlList) {
                 //  音声リストを取得
                 switch (getParam('step')) {
                     case '1':
+                        // 1〜3の段の音声を取得しランダム再生
                         voiceData = voiceList.filter(voiceList => voiceList.type === 'qa' && voiceList.StepGroup === 1);
                         sortRandom(voiceData);
-                        // 1〜3の段の音声を再生
                         audioPlay(voiceData[counter - 1].VoiceUrl);
                         break;
                     case '4':
+                        // ４〜6の段の音声を取得しランダム再生
                         voiceData = voiceList.filter(voiceList => voiceList.type === 'qa' && voiceList.StepGroup === 4);
                         sortRandom(voiceData);
-                        // ４〜6の段の音声を再生
                         audioPlay(voiceData[counter - 1].VoiceUrl);
                             break;
                     case '7':
+                        // ７〜9の段音声を取得しランダム再生
                         voiceData = voiceList.filter(voiceList => voiceList.type === 'qa' && voiceList.StepGroup === 7);
                         sortRandom(voiceData);
-                        // ７〜9の段音声を再生
                         audioPlay(voiceData[counter - 1].VoiceUrl);
                             break;
                     default:
+                        // 全ての段の音声を取得しランダム再生
                         voiceData = voiceList.filter(voiceList => voiceList.type === 'qa');
                         sortRandom(voiceData);
-                        // 全ての段の音声を再生
                         audioPlay(voiceData[counter - 1].VoiceUrl);
                             break;
                 }
@@ -388,27 +407,27 @@ function init(urlList) {
                 //  音声リストを取得
                 switch (getParam('step')) {
                     case '1':
+                        // 1〜3の段の音声を取得しランダム再生
                         voiceData = voiceList.filter(voiceList => voiceList.type === 'q' && voiceList.StepGroup === 1);
                         sortRandom(voiceData);
-                        // 1〜3の段の音声を再生
                         audioPlay(voiceData[counter - 1].VoiceUrl);
                         break;
                     case '4':
+                        // ４〜6の段の音声を取得しランダム再生
                         voiceData = voiceList.filter(voiceList => voiceList.type === 'q' && voiceList.StepGroup === 4);
                         sortRandom(voiceData);
-                        // ４〜6の段の音声を再生
                         audioPlay(voiceData[counter - 1].VoiceUrl);
                             break;
                     case '7':
+                        // ７〜9の段音声を取得しランダム再生
                         voiceData = voiceList.filter(voiceList => voiceList.type === 'q' && voiceList.StepGroup === 7);
                         sortRandom(voiceData);
-                        // ７〜9の段音声を再生
                         audioPlay(voiceData[counter - 1].VoiceUrl);
                             break;
                     default:
+                        // 全ての段の音声を取得しランダム再生
                         voiceData = voiceList.filter(voiceList => voiceList.type === 'q');
                         sortRandom(voiceData);
-                        // 全ての段の音声を再生
                         audioPlay(voiceData[counter - 1].VoiceUrl);
                             break;
                 }
@@ -630,6 +649,7 @@ function repeatVoice(repeatData) {
         playNextAudio();
 
     } else if(repeat == 2 && repeatCounter < 2 || repeat == 3 && repeatCounter < 3) {
+        answerPlayed = false;
         // 2回または3回再生
         audio.currentTime = 0;
         timeoutFunc = setTimeout(function () {
